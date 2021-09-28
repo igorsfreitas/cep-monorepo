@@ -123,7 +123,7 @@ export default function App() {
               Busca CEP
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                Digite um CEP válido (00000-000) para consultar o endereço, ou veja o histórico na aba de endereços recentes.
+                Digite um CEP válido (00000-000) para consultar o endereço. Caso o endereço já tenha sido consultado anteriormente, a aplicação irá fazer uma busca local 
             </Typography>
           </Container>
         </div>
