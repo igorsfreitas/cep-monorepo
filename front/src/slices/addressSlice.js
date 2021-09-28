@@ -13,7 +13,7 @@ export const getAddressByCep = createAsyncThunk(
       const exist = state.address.list.find(address => address.cep.split('-').join('') === cep)
 
       if(!exist) {
-        const response = await fetch(`http://localhost:3333/address?cep=${cep}`)
+        const response = await fetch(`${process.env.REACT_APP_API_KEY}address?cep=${cep}`)
         const data = await response.json()
         return data.address
       }
