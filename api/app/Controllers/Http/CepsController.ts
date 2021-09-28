@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { getAddressByCep } from 'App/Services/ViaCep'
+import { getAddressesByCepService } from 'App/Services/ViaCep'
 import { schema } from 'App/Validation/CepValidator'
 
 export default class CepsController {
@@ -22,8 +22,8 @@ export default class CepsController {
   *         description: Send Address for this cep
   *         example:
   *           properties:
-  *            address:
-  *              type: object
+  *            addresses:
+  *              type: array
   *       400:
   *         description: Throws validations errors or wrong cep error
   *         example:
@@ -31,21 +31,20 @@ export default class CepsController {
   *            errors:
   *              type: object
   */
-  public async getAddressByCep({request, response}: HttpContextContract) {
+  public async getAddressesByCep({request, response}: HttpContextContract) {
 
     const requestData = request.all()
 
     try {
         await schema.validate(requestData)
-        const address = await getAddressByCep(requestData.cep)
+        const addresses = await getAddressesByCepService(requestData.cep)
         
-        return response.send({address})
+        return response.send({addresses})
     } catch (error) {
         return response.status(400).send({
             errors: error.errors,
             message: error.message,
         })
     }
-    
   }
 }

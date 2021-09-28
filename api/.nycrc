@@ -7,6 +7,7 @@
     "**/swagger.ts",
     "**/server.ts",
     "**/Handler.ts",
-    "**/AppProvider.ts"
+    "**/AppProvider.ts",
+    "**/kernel.ts"
   ]
 }

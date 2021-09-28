@@ -20,4 +20,4 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/address', 'CepsController.getAddressByCep')
+Route.get('/address', 'CepsController.getAddressesByCep')

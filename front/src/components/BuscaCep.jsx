@@ -6,7 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputMask from 'react-input-mask';
 import { useSelector, useDispatch } from 'react-redux'
-import { getAddressByCep, getAddress } from '../slices/addressSlice'
+import { getAddressByCep } from '../slices/addressSlice'
+import AddressesTable from './Addresses'
 import Alert from '@material-ui/lab/Alert'
 
 export default function CustomizedDialogs({open, handleClose, avaibleUsers, selectedOffer}) {
@@ -60,54 +61,7 @@ export default function CustomizedDialogs({open, handleClose, avaibleUsers, sele
             { addresses.status === 'failed' ? <Alert severity="error">Cep Inválido</Alert> : null }
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              id="address1"
-              name="address1"
-              label={'Logradouro'}
-              fullWidth
-              autoComplete="shipping address-line1"
-              variant="outlined"
-              value={addresses.status === 'failed' ? '' : addresses.latest?.logradouro}
-              disabled
-              InputLabelProps={{shrink: true}}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="address2"
-              name="address2"
-              label={'Bairro'}
-              fullWidth
-              autoComplete="shipping address-line2"
-              variant="outlined"
-              value={addresses.status === 'failed' ? '' : addresses.latest?.bairro}
-              disabled
-              InputLabelProps={{shrink: true}}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="city"
-              name="city"
-              label={'Cidade'}
-              fullWidth
-              variant="outlined"
-              value={addresses.status === 'failed' ? '' : addresses.latest?.localidade}
-              disabled
-              InputLabelProps={{shrink: true}}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              id="state"
-              name="state"
-              label={'Estado'}
-              fullWidth
-              variant="outlined"
-              value={addresses.status === 'failed' ? '' : addresses.latest?.uf}
-              disabled
-              InputLabelProps={{shrink: true}}
-            />
+            { addresses.status === 'success' ? <AddressesTable rows={addresses.latest} /> : null }
           </Grid>
         </Grid>
       </React.Fragment>

@@ -1,12 +1,16 @@
 import axios from 'axios'
 import Env from '@ioc:Adonis/Core/Env'
 
-export const getAddressByCep = async (cep) => {
-    const requestUrl = `${Env.get('VIACEP_API_URL')}${cep}/json/`
+export const getAddressesByCepService = async (cep) => {
+    const requestUrlByCep = `${Env.get('VIACEP_API_URL')}${cep}/json/`
 
-    const response = await axios.get(requestUrl)
+    const addressByCep = await axios.get(requestUrlByCep)
 
-    if(response.data.erro) throw {message: 'CEP Inválido'}
+    if(addressByCep.data.erro) throw {message: 'CEP Inválido'}
 
-    return response.data
+    const requestUrlByLocality = encodeURI(`${Env.get('VIACEP_API_URL')}${addressByCep.data.uf}/${addressByCep.data.localidade}/${addressByCep.data.logradouro}/json/`)
+
+    const addresses = await axios.get(requestUrlByLocality)
+
+    return addresses.data
 }

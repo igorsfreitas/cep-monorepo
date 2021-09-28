@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 const initialState = {
     list: [],
-    latest: {},
+    latest: [],
     status: null
 }
 
@@ -15,7 +15,7 @@ export const getAddressByCep = createAsyncThunk(
       if(!exist) {
         const response = await fetch(`${process.env.REACT_APP_API_KEY}address?cep=${cep}`)
         const data = await response.json()
-        return data.address
+        return data.addresses
       }
 
       return exist
@@ -41,9 +41,14 @@ export const addressSlice = createSlice({
       },
       [getAddressByCep.fulfilled]: (state, action) => {
           if(action.payload) {
-            const exist = state.list.find(address => address.cep === action.payload.cep)
-            if(!exist) state.list.push(action.payload)
-            state.latest = action.payload
+            const exist = address => state.list.find(item => item.cep === address.cep)
+
+            if(Array.isArray(action.payload)){
+                const newAdresses = action.payload.filter( address => !exist(address) )
+                state.list.push.apply(state.list, newAdresses)
+                state.latest = action.payload
+            } else state.latest = [action.payload]
+            
             state.status = 'success'
           }else{
             state.latest = {}
