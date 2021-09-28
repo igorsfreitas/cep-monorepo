@@ -1,3 +1,9 @@
+
+
+## Configure env
+
+In copy the .env.example file, then rename to .env and configure the endpoint api
+
 ## Available Scripts
 
 In the project directory, you can run:
